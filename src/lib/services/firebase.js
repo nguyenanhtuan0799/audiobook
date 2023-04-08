@@ -262,9 +262,12 @@ export const getProductDetailAPI = async (productId) => {
 
     if (docSnap.exists()) {
       const categoryRef = await getDoc(docSnap.data().categoryRef);
+      const authorRef = await getDoc(docSnap.data().authorRef);
+
       return {
         ...docSnap.data(),
         categoryRef: categoryRef.data(),
+        authorRef: authorRef.data(),
         id: docSnap.id,
       };
     } else {
