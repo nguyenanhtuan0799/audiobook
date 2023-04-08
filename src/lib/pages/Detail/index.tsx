@@ -14,12 +14,7 @@ const Detail = (props: Props) => {
     >
       <Container maxW={"3xl"}>
         <Box>
-          {/* <Image
-            src="https://fonos.vn/_next/image?url=https%3A%2F%2Fcdn.fonos.dev%2Fbooks%2Fb1a2b170-a699-11ed-8cc6-db36c2ef4bd1%2FcoverImage%2F1675760868049_3x.webp&w=2048&q=75"
-            alt="Dan Abramov"
-            width={100}
-            height={300}
-          /> */}
+          <Image src="" alt="Dan Abramov" width={100} height={300} />
         </Box>
         <Box>
           <Text></Text>
