@@ -13,7 +13,7 @@ const Header = (props: Props) => {
         "linear-gradient(0deg, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0.2) 100%), rgb(244, 100, 36)"
       }
     >
-      <Container maxW={"4xl"}>
+      <Container maxW={"5xl"}>
         <Box
           height={"80px"}
           display="flex"

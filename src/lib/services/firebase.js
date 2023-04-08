@@ -89,7 +89,6 @@ export const getProductsAPI = async () => {
         id: doc.id,
       });
     });
-
     return list;
   } catch (err) {
     console.log(err);
