@@ -1,4 +1,4 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Container, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { ReactNode } from "react";
 
@@ -13,7 +13,7 @@ const Layout = ({ children }: LayoutProps) => {
 
   return (
     <Box transition="0.5s ease-out">
-      <Box>
+      <Box height={80}>
         <Header />
         {children}
       </Box>
