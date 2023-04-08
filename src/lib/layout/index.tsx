@@ -13,10 +13,8 @@ const Layout = ({ children }: LayoutProps) => {
 
   return (
     <Box transition="0.5s ease-out">
-      <Box height={80}>
-        <Header />
-        {children}
-      </Box>
+      <Header />
+      <Box mb="14">{children}</Box>
     </Box>
   );
 };
