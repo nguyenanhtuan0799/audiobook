@@ -22,14 +22,13 @@ import {
 import { omit } from "lodash";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDuPReToWsngvdVEoq_Tk5ekzOks0DdLwM",
-  authDomain: "dtstore-1b23d.firebaseapp.com",
-  projectId: "dtstore-1b23d",
-  // databaseURL: "",
-  storageBucket: "dtstore-1b23d.appspot.com",
-  messagingSenderId: "73199860427",
-  appId: "1:73199860427:web:d4acb159e538339656f94e",
-  measurementId: "G-36F656J6D1",
+  apiKey: "AIzaSyB5Xf2NkihwnhFJr0rLfmE-GGCjELM53Do",
+  authDomain: "audiobook-78e9a.firebaseapp.com",
+  projectId: "audiobook-78e9a",
+  storageBucket: "audiobook-78e9a.appspot.com",
+  messagingSenderId: "865004479225",
+  appId: "1:865004479225:web:efe4544000020124dfb828",
+  measurementId: "G-61748RRWNH",
 };
 
 const app = firebase.initializeApp(firebaseConfig);
@@ -59,6 +58,8 @@ export const signInWithGoogle = () => {
 
 const ProductCollection = collection(db, "products");
 const CategoriesCollection = collection(db, "categories");
+const AuthorCollection = collection(db, "author");
+
 const OrderCollection = collection(db, "orders");
 // const OptionCollection = db.collection('options');
 // const GiftCollection = db.collection('gifts');
@@ -73,13 +74,18 @@ export const getProductsAPI = async () => {
     const categoryRefPromises = docSnap.docs.map(async (doc) => {
       return getDoc(doc.data().categoryRef);
     });
+    const authorRefPromises = docSnap.docs.map(async (doc) => {
+      return getDoc(doc.data().authorRef);
+    });
 
     const categoryRefs = await Promise.all(categoryRefPromises);
+    const authorRefs = await Promise.all(authorRefPromises);
 
     docSnap.docs.forEach((doc, i) => {
       list.push({
         ...doc.data(),
         categoryRef: categoryRefs[i].data(),
+        authorRef: authorRefs[i].data(),
         id: doc.id,
       });
     });
@@ -92,6 +98,22 @@ export const getProductsAPI = async () => {
 export const getCategoriesAPI = async () => {
   try {
     const docRef = CategoriesCollection;
+    const docSnap = await getDocs(docRef);
+    const list = [];
+    docSnap.forEach((doc) => {
+      list.push({ ...doc.data(), id: doc.id });
+    });
+    if (docSnap) {
+      return list;
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getAuthorAPI = async () => {
+  try {
+    const docRef = AuthorCollection;
     const docSnap = await getDocs(docRef);
     const list = [];
     docSnap.forEach((doc) => {
