@@ -3,6 +3,7 @@ import React from "react";
 import { BiBook, BiSearch } from "react-icons/bi";
 import { Input } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/react";
+import Link from "next/link";
 type Props = {};
 const Header = (props: Props) => {
   return (
@@ -20,12 +21,14 @@ const Header = (props: Props) => {
           alignItems="center"
           justifyContent={"space-between"}
         >
-          <Box display="flex">
-            <BiBook size={34} color="white" />
-            <Text fontSize={"24px"} ml={"10px"} color="white">
-              Audio Book
-            </Text>
-          </Box>
+          <Link href={"/"}>
+            <Box display="flex">
+              <BiBook size={34} color="white" />
+              <Text fontSize={"24px"} ml={"10px"} color="white">
+                Audio Book
+              </Text>
+            </Box>
+          </Link>
         </Box>
       </Container>
     </Box>

@@ -8,12 +8,7 @@ const CardProduct = (props: any) => {
   const { item } = props;
   return (
     <Link href={`detail/${item.id}`}>
-      <Box
-        alignItems="center"
-        justifyContent="center"
-        minHeight={"60vh"}
-        w={"100%"}
-      >
+      <Box alignItems="center" justifyContent="center" w={"100%"}>
         <Box width={"100%"} height={"70%"}>
           {item?.imageUrl && (
             <Image
