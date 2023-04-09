@@ -13,7 +13,7 @@ const Header = (props: Props) => {
         "linear-gradient(0deg, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0.2) 100%), rgb(244, 100, 36)"
       }
     >
-      <Container maxW={"5xl"}>
+      <Container maxW={"3xl"}>
         <Box
           height={"80px"}
           display="flex"
@@ -25,16 +25,6 @@ const Header = (props: Props) => {
             <Text fontSize={"24px"} ml={"10px"} color="white">
               Audio Book
             </Text>
-          </Box>
-          <Box display="flex">
-            <Input
-              placeholder="Tìm kiếm sách"
-              w={"400px"}
-              background={"white"}
-            />
-            <Button ml={"10px"}>
-              <BiSearch size={20} />
-            </Button>
           </Box>
         </Box>
       </Container>
