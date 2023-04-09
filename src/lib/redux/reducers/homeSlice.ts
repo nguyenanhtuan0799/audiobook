@@ -2,10 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface HomeSlice {
   listProduct: any[];
+  listCategory: any[];
 }
 
 const initialState: HomeSlice = {
   listProduct: [],
+  listCategory: [],
 };
 
 export const homeSlice = createSlice({
@@ -16,8 +18,11 @@ export const homeSlice = createSlice({
     getListProductOk: (state, action) => {
       state.listProduct = action.payload;
     },
+    getListCategoryOk: (state, action) => {
+      state.listCategory = action.payload;
+    },
   },
 });
 
-export const { getListProductOk } = homeSlice.actions;
+export const { getListProductOk, getListCategoryOk } = homeSlice.actions;
 export default homeSlice.reducer;

@@ -13,6 +13,7 @@ const persistConfig = {
   key: "root",
   storage,
   whitelist: ["productSlice", "homeSlice"],
+  blacklist: ["blacklist"],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);
