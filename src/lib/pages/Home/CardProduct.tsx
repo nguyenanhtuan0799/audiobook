@@ -8,7 +8,7 @@ const CardProduct = (props: any) => {
   const { item } = props;
   console.log(item, "??9");
   return (
-    <Link href={`${item.id}`}>
+    <Link href={`detail/${item.id}`}>
       <Box
         alignItems="center"
         justifyContent="center"

@@ -1,7 +1,11 @@
 import { call, delay, put, select, takeLatest } from "redux-saga/effects";
-import { getProductsRq } from "../actions/homeAction";
-import { getCategoriesAPI, getProductsAPI } from "lib/services/firebase";
-import { getListProductOk } from "../reducers/homeSlice";
+import { getCategoriesRq, getProductsRq } from "../actions/homeAction";
+import {
+  getCategoriesAPI,
+  getProductsAPI,
+  getProductsByCatAPI,
+} from "lib/services/firebase";
+import { getListCategoryOk, getListProductOk } from "../reducers/homeSlice";
 
 function* getListCategory(_action: any) {
   try {
@@ -13,7 +17,9 @@ function* getListCategory(_action: any) {
       // intermediate argument
       any
     > = yield call(getCategoriesAPI);
-    // yield put(getListCategoryOk(res));
+    if (res) {
+      yield put(getListCategoryOk(res));
+    }
   } catch (err) {
     console.log(err);
   }
@@ -21,7 +27,12 @@ function* getListCategory(_action: any) {
 
 function* getListProductSaga(_action: any) {
   try {
-    const res: Generator<any, void, any> = yield call(getProductsAPI);
+    const res: Generator<any, void, any> = yield call(
+      getProductsByCatAPI,
+      _action.payload?.id
+    );
+    console.log(res, "???0", _action.payload?.id);
+
     if (res) {
       yield put(getListProductOk(res));
     }
@@ -32,6 +43,7 @@ function* getListProductSaga(_action: any) {
 
 function* homeSaga() {
   yield takeLatest(getProductsRq.type, getListProductSaga);
+  yield takeLatest(getCategoriesRq.type, getListCategory);
 }
 
 export default homeSaga;

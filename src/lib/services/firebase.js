@@ -202,7 +202,7 @@ export const updateProductView = async (productId) => {
 
 export const getProductsByCatAPI = async (catId) => {
   try {
-    if (catId) {
+    if (catId && catId !== "tat-ca") {
       const catRef = doc(db, `categories/${catId}`);
 
       const q = query(
@@ -217,12 +217,19 @@ export const getProductsByCatAPI = async (catId) => {
         return getDoc(doc.data().categoryRef);
       });
 
+      const authorRefPromises = querySnapshot.docs.map(async (doc) => {
+        return getDoc(doc.data().authorRef);
+      });
+
+      const authorRefs = await Promise.all(authorRefPromises);
+
       const categoryRefs = await Promise.all(categoryRefPromises);
 
       querySnapshot.docs.forEach((doc, i) => {
         list.push({
           ...doc.data(),
           categoryRef: categoryRefs[i].data(),
+          authorRef: authorRefs[i].data(),
           id: doc.id,
         });
       });
@@ -236,13 +243,18 @@ export const getProductsByCatAPI = async (catId) => {
       const categoryRefPromises = querySnapshot.docs.map(async (doc) => {
         return getDoc(doc.data().categoryRef);
       });
+      const authorRefPromises = querySnapshot.docs.map(async (doc) => {
+        return getDoc(doc.data().authorRef);
+      });
 
+      const authorRefs = await Promise.all(authorRefPromises);
       const categoryRefs = await Promise.all(categoryRefPromises);
 
       querySnapshot.docs.forEach((doc, i) => {
         list.push({
           ...doc.data(),
           categoryRef: categoryRefs[i].data(),
+          authorRef: authorRefs[i].data(),
           id: doc.id,
         });
       });
