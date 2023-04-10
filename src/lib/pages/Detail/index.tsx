@@ -15,7 +15,7 @@ import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BiGridAlt, BiTimeFive } from "react-icons/bi";
-import { AiOutlineUser } from "react-icons/ai";
+import { saveBookListen } from "lib/redux/reducers/bookSlice";
 type Props = {};
 
 const Detail = (props: Props) => {
@@ -36,6 +36,11 @@ const Detail = (props: Props) => {
   const html = () => ({
     __html: productDetail?.description?.toString("html"),
   });
+
+  const handleClickBook = () => {
+    dispatch(saveBookListen(productDetail));
+  };
+
   return (
     <>
       <Box
@@ -89,9 +94,9 @@ const Detail = (props: Props) => {
                   </Text>
                 </Box>
                 <Flex mt={"10px"} alignItems="center">
-                  <BiGridAlt size={20} color="white" />
+                  <BiGridAlt size={28} color="white" />
                   <Text
-                    ml={"6px"}
+                    ml={"10px"}
                     fontSize={"20px"}
                     fontWeight="thin"
                     color="white"
@@ -102,7 +107,7 @@ const Detail = (props: Props) => {
                 <Flex mb="10px" alignItems="center">
                   <BiTimeFive size={20} color="white" />
                   <Text
-                    ml={"6px"}
+                    ml={"10px"}
                     fontSize={"20px"}
                     fontWeight="thin"
                     color="white"
@@ -114,6 +119,7 @@ const Detail = (props: Props) => {
               <GridItem colSpan={{ base: 6, md: 3 }}>
                 <Flex justifyContent={"center"} w={"100%"}>
                   <Button
+                    onClick={handleClickBook}
                     w={"100%"}
                     background={
                       "linear-gradient(to right, rgb(255, 166, 89) 0%, rgb(255, 109, 109) 100%);"
@@ -129,7 +135,6 @@ const Detail = (props: Props) => {
           </Flex>
         </Container>
       </Box>
-
       <Box>
         <Container maxW={"3xl"}>
           <Text fontWeight="bold" fontSize={"28px"} mt={10}>
@@ -157,4 +162,3 @@ const Detail = (props: Props) => {
 };
 
 export default Detail;
-``;
