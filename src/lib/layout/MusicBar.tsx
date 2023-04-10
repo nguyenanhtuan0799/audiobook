@@ -1,19 +1,50 @@
-import { Box, Container, Flex, Image, Text } from "@chakra-ui/react";
-import React from "react";
+import { Box, Button, Container, Flex, Image, Text } from "@chakra-ui/react";
+import React, { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
-import { useSelector } from "react-redux";
-import { bookSelector } from "lib/redux/selector/bookListenSelector";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  bookSelector,
+  seekSelector,
+} from "lib/redux/selector/bookListenSelector";
 import { isEmpty } from "lodash";
+import ReactPlayer from "react-player";
+import { saveSeekListen } from "lib/redux/reducers/bookSlice";
 
-const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });
 type Props = {};
 
 const MusicBar = (props: Props) => {
   const bookInfo = useSelector(bookSelector);
+  const seekInfo = useSelector(seekSelector);
+  const dispatch = useDispatch();
+
+  const [hasWindow, setHasWindow] = useState(false);
+
+  const playerRef = useRef<ReactPlayer>(null);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setHasWindow(true);
+    }
+    if (!isEmpty(seekInfo)) {
+      const { id, seek } = seekInfo;
+      if (id === bookInfo.id) {
+        playerRef.current?.seekTo(seek, "seconds");
+      }
+    }
+  }, []);
+
+  const handleProgress = (state) => {
+    dispatch(
+      saveSeekListen({
+        id: bookInfo?.id,
+        seek: state?.playedSeconds,
+      })
+    );
+  };
 
   if (isEmpty(bookInfo)) {
     return null;
   }
+
   return (
     <Box
       position="fixed"
@@ -26,7 +57,7 @@ const MusicBar = (props: Props) => {
       borderTopRightRadius="lg"
       shadow="xl"
       boxShadow="xl"
-      height={120}
+      height={100}
       backgroundColor={"white"}
     >
       <Container maxW={"3xl"} height={"100%"}>
@@ -35,7 +66,7 @@ const MusicBar = (props: Props) => {
             alt={bookInfo?.name}
             src={bookInfo?.imageUrl}
             width={{ base: "60px", md: "60px" }}
-            height={{ base: "64px", md: "80px" }}
+            height={{ base: "70px", md: "70px" }}
             rounded="lg"
             borderWidth="1px"
             shadow="lg"
@@ -47,12 +78,16 @@ const MusicBar = (props: Props) => {
             </Text>
           </Box>
           <Flex ml={4} alignItems={"center"} height={"100%"}>
-            <ReactPlayer
-              url={bookInfo?.fileUrl}
-              controls
-              width={300}
-              height={70}
-            />
+            {hasWindow && (
+              <ReactPlayer
+                ref={playerRef}
+                url={bookInfo?.fileUrl}
+                controls
+                width={280}
+                height={60}
+                onProgress={handleProgress}
+              />
+            )}
           </Flex>
         </Box>
       </Container>

@@ -2,10 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface BookSlice {
   book: any;
+  infoPause: any | undefined;
 }
 
 const initialState: BookSlice = {
   book: undefined,
+  infoPause: undefined,
 };
 
 export const BookSlice = createSlice({
@@ -16,8 +18,11 @@ export const BookSlice = createSlice({
     saveBookListen: (state, action) => {
       state.book = action.payload;
     },
+    saveSeekListen: (state, action) => {
+      state.infoPause = action.payload;
+    },
   },
 });
 
-export const { saveBookListen } = BookSlice.actions;
+export const { saveBookListen, saveSeekListen } = BookSlice.actions;
 export default BookSlice.reducer;
