@@ -32,7 +32,7 @@ const MusicBar = (props: Props) => {
     }
   }, []);
 
-  const handleProgress = (state) => {
+  const handleProgress = (state: any) => {
     dispatch(
       saveSeekListen({
         id: bookInfo?.id,
